@@ -1,0 +1,22 @@
+{% extends 'base_DO.html' %}
+
+{% block content %}
+    <h1 class="title">{% block title %} Recipes {% endblock %}</h1>
+    <div class="content">
+        {% for recipe in recipes %}
+            <div class="recipe">
+                <p><b>#{{ recipe.id }}</b></p>
+
+                    <p class="name">
+                        <a href="{{ url_for('recipe', recipe_id=recipe.id)}}">
+                            {{ recipe.title }} </a>
+                            Category : {{ recipe.category }}
+                    </p>
+                <div class="ingredients">
+                    <h4>Ingredients</h4>
+                    <p>{{ recipe.ingredients }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base_DO.html' %}
+
+{% block content %}
+    <span class="title">
+        <h1>{% block title %} {{ recipe.title }} {{ recipe.category }}{% endblock %}</h1>
+    </span>
+    <div class="content">
+            <div class="recipe">
+                <p><b>#{{ recipe.id }}</b></p>
+                <b>
+                    <p class="name">{{ recipe.title }} {{ recipe.category }}</p>
+                </b>
+                 <div class="ingredients">
+                    <h4>Ingredients</h4>
+                    <p>{{ recipe.ingredients }}</p>
+                </div>
+                <div class="directions">
+                    <h4>Directions</h4>
+                    <p>{{ recipe.directions }}</p>
+                </div>
+            </div>
+    </div>
+{% endblock %}
