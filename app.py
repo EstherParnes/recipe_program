@@ -116,3 +116,4 @@ def delete(recipe_id):
     db.session.delete(recipe)
     db.session.commit()
     return redirect(url_for('index'))
+#commit now
