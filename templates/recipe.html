@@ -1,4 +1,4 @@
-{% extends 'base_DO.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
     <span class="title">
@@ -20,4 +20,12 @@
                 </div>
             </div>
     </div>
+    <a href="{{ url_for('edit', recipe_id=recipe.id) }}">Edit</a>
+    
+    <hr>
+    <form method="POST"
+            action="{{ url_for('delete', recipe_id=recipe.id) }}">
+        <input type="submit" value="Delete Recipe"
+            onclick="return confirm('Are you sure you want to delete this entry?')">
+    </form>
 {% endblock %}

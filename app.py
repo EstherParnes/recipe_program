@@ -47,16 +47,72 @@ def home():
 
 """
 # THIS IS DIGITAL OCEAN CODE
+
+
 @app.route('/')
 def index():
     # students = Student.query.all()
-    #recipe_list = db.session.query(Recipe).all()
+    # recipe_list = db.session.query(Recipe).all()
     recipes = Recipe.query.all()
-    return render_template('index_DO.html', recipes=recipes)
+    return render_template('index.html', recipes=recipes)
 # ...
 
 
 @app.route('/<int:recipe_id>/')
-def recipe (recipe_id):
+def recipe(recipe_id):
     recipe = Recipe.query.get_or_404(recipe_id)
     return render_template('recipe.html', recipe=recipe)
+
+
+@app.route('/create/', methods=('GET', 'POST'))
+def create():
+    if request.method == 'POST':
+        title = request.form['title']
+        category = request.form['category']
+        ingredients = request.form['ingredients']
+        directions = request.form['directions']
+        recipe = Recipe(
+            title=title,
+            category=category,
+            ingredients=ingredients,
+            directions=directions)
+
+        db.session.add(recipe)
+        db.session.commit()
+
+        return redirect(url_for('index'))
+
+    return render_template('create.html')
+# ...
+
+
+@app.route('/<int:recipe_id>/edit/', methods=('GET', 'POST'))
+def edit(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+
+    if request.method == 'POST':
+        title = request.form['title']
+        category = request.form['category']
+        ingredients = request.form['ingredients']
+        directions = request.form['directions']
+
+        recipe.title = title
+        recipe.category = category
+        recipe.ingredients = ingredients
+        recipe.directions = directions
+
+        db.session.add(recipe)
+        db.session.commit()
+
+        return redirect(url_for('index'))
+
+    return render_template('edit.html', recipe=recipe)
+
+# ...
+
+@app.post('/<int:recipe_id>/delete/')
+def delete(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    db.session.delete(recipe)
+    db.session.commit()
+    return redirect(url_for('index'))
